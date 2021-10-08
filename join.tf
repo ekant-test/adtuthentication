@@ -129,7 +129,7 @@ resource "aws_launch_template" "default" {
   }
 }
 
-resource "null_resource" "portal" {
+resource "null_resource" "default" {
   depends_on = [
     aws_launch_template.default,
     aws_autoscaling_group.default

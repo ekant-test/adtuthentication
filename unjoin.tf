@@ -1,4 +1,4 @@
-resource "aws_autoscaling_lifecycle_hook" "portal" {
+resource "aws_autoscaling_lifecycle_hook" "default" {
   name                   = "default"
   autoscaling_group_name = aws_autoscaling_group.default.name
   default_result         = "ABANDON"

@@ -34,7 +34,7 @@ resource "aws_iam_role_policy_attachment" "default_amzn_ssm_instance_core" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-resource "aws_iam_role_policy" "portal_policy_allow_all_ssm" {
+resource "aws_iam_role_policy" "default_policy_allow_all_ssm" {
   name = "secretmanagerpolicy"
   role = aws_iam_role.default_role.id
   policy = jsonencode(
