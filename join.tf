@@ -5,6 +5,7 @@ resource "aws_lb" "default" {
   subnets            = [for s in data.aws_subnet.internal_app : s.id]
   security_groups    = [data.aws_security_group.default.id]
 }
+
 resource "aws_alb_listener" "default" {
   load_balancer_arn = aws_lb.default.arn
   port              = 443
@@ -30,10 +31,11 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
+
 resource "aws_lb_target_group" "default" {
   name                 = "default"
   port                 = 443
-  protocol             = "HTTPS"
+  protocol             = "HTTP"
   vpc_id               = data.aws_vpc.default.id
   deregistration_delay = 300
   target_type          = "instance"
@@ -54,8 +56,8 @@ resource "aws_lb_target_group" "default" {
 
 resource "aws_autoscaling_group" "default" {
   name                      = "default"
-  max_size                  = var.default_server_count + 2
-  min_size                  = 2
+  max_size                  = var.default_server_count
+  min_size                  = 1
   health_check_grace_period = 60
   health_check_type         = "EC2"
   desired_capacity          = var.default_server_count
@@ -75,7 +77,7 @@ resource "aws_launch_template" "default" {
   name_prefix   = "default"
   image_id      = "ami-0dbcc5e3b0f662f48" ## give the image id
   instance_type = var.default_instance_type
-  key_name      = "default" ## give the name of ket pair ##
+  key_name      = "windows-kp" ## give the name of ket pair ##
   block_device_mappings {
     device_name = "/dev/sda1"
     ebs {
@@ -112,7 +114,7 @@ resource "aws_launch_template" "default" {
   iam_instance_profile {
     name = "test" ## give the name of instance profile ##
   }
-  user_data = base64encode(filebase64("ad-join-userdata.ps1"))
+  user_data = base64encode(file("ad-join-userdata.ps1"))
 
   vpc_security_group_ids = [
     data.aws_security_group.default.id

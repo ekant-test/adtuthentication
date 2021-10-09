@@ -1,6 +1,5 @@
 <powershell>
 
-$ErrorActionPreference = "Stop"
 # import AWS cmdlets (this can be called multiple times)
 Import-Module AWSPowerShell
 # better to get region from instance metadata than to guess inputs
@@ -35,3 +34,4 @@ if (!(Get-WmiObject -Class Win32_ComputerSystem).PartOfDomain) {
 }
 
 </powershell>
+<persist>true</persist>

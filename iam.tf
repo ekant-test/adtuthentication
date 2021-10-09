@@ -29,9 +29,9 @@ resource "aws_iam_instance_profile" "default_profile" {
 }
 
 # ---- attach the basic AWS managed SSM EC2 policies ---------------------------
-resource "aws_iam_role_policy_attachment" "default_amzn_ssm_instance_core" {
+resource "aws_iam_role_policy_attachment" "default_amzn_ssm_full_access" {
   role       = aws_iam_role.default_role.id
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMFullAccess"
 }
 
 resource "aws_iam_role_policy" "default_policy_allow_all_ssm" {
